@@ -1,0 +1,48 @@
+/* .navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 4%;
+}
+
+
+.navbar .logo1{
+    width: max(10%,80px);
+}
+
+.navbar .profile{
+    width: 40px;
+} */
+
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar p {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.logo1 {
+    height: 60px;  /* Increased from 40px to 60px */
+    width: auto;
+    object-fit: contain;  /* Ensures the image maintains its aspect ratio */
+}
+
+.profile {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
