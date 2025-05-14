@@ -4,7 +4,7 @@ import { assets } from '../../assets/assets'
 import { Storecontext } from '../../context/Storecontext'
 import axios from "axios"
 
-const LoginPopup = ({setShowLogin}) => {
+const LoginPopup = ({ setShowLogin }) => {
 
   const { url, setToken } = useContext(Storecontext)
   const [currState, setCurrState] = useState("Login")
@@ -24,29 +24,60 @@ const LoginPopup = ({setShowLogin}) => {
     setData(data => ({ ...data, [name]: value }))
   }
 
-  const onLogin = async (event) => {
-    event.preventDefault()    //to prevent the page from reloading
-  
-    let newUrl = url;
-    if (currState == "Login") {
-      newUrl += "/api/user/login"      //checks whether the current state is login or not
-    }
-    else {
-      newUrl += "/api/user/register"
-    }
+  // const onLogin = async (event) => {
+  //   event.preventDefault()    //to prevent the page from reloading
 
-    //call api
-    const response = await axios.post(newUrl, data);   
-    if (response.data.success) {   //if this is true that means the user is logged in
+  //   let newUrl = url;
+  //   if (currState == "Login") {
+  //     newUrl += "/api/user/login"      //checks whether the current state is login or not
+  //   }
+  //   else {
+  //     newUrl += "/api/user/register"
+  //   }
+
+  //   //call api
+  //   const response = await axios.post(newUrl, data);
+  //   if (response.data.success) {   //if this is true that means the user is logged in
+  //     setToken(response.data.token);
+  //     localStorage.setItem("token", response.data.token);
+  //     setShowLogin(false)
+
+  //   }
+  //   else {
+  //     alert(response.data.message)
+  //   }
+  // };
+
+
+
+  const onLogin = async (event) => {
+  event.preventDefault();
+
+  let newUrl = url;
+  if (currState === "Login") {
+    newUrl += "/api/user/login";
+  } else {
+    newUrl += "/api/user/register";
+  }
+
+  try {
+    const response = await axios.post(newUrl, data);
+
+    if (response.data.success && response.data.token) {
       setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
-      setShowLogin(false)   
-
+      setShowLogin(false);
+    } else if (response.data.success && !response.data.token) {
+      alert("Registration/Login successful, but no token was returned from the server.");
+    } else {
+      alert(response.data.message || "Registration/Login failed");
     }
-    else {
-      alert(response.data.message)
-    }
+  } catch (error) {
+    alert("An error occurred. Please try again.");
+    console.error(error);
   }
+};
+
   return (
     <div className='login-popup'>
       <form onSubmit={onLogin} className="login-popup-container">
@@ -69,7 +100,7 @@ const LoginPopup = ({setShowLogin}) => {
           ? <p>Create a new account? <span onClick={() => setCurrState("Sign up")}>Click Here!</span></p>
           : <p>Already have an account? <span onClick={() => setCurrState("Login")}>Login Here</span></p>
         }
-        
+
       </form>
     </div>
   )

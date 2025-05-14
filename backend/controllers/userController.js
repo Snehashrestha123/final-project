@@ -5,29 +5,54 @@ import validator from "validator"
 
 
 //login user
+// const loginUser = async (req, res) => {
+//     const { email, password } = req.body;
+//     try {
+//         const user = await userModel.findOne({ email });  
+//         if (!user) {
+//             return res.json({ success: false, message: "user doesn't exist" })
+//         }
+
+//         const isMatch = await bcrypt.compare(password, user.password);    
+
+//         if (!isMatch) {
+//             return res.json({ success: false, message: "Invalid credentials" })  
+//         }
+
+//         const token = createToken(user._id);
+//         res.json({ success: true, token })
+
+//     } catch (error) {
+//         console.log(error);
+//         res.json({ success: false, message: "Error" })
+//     }
+
+// }
+
+
+
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
     try {
-        const user = await userModel.findOne({ email });  
+        const user = await userModel.findOne({ email });
         if (!user) {
-            return res.json({ success: false, message: "user doesn't exist" })
+            return res.json({ success: false, message: "Invalid email or password" });
         }
 
-        const isMatch = await bcrypt.compare(password, user.password);    
-
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.json({ success: false, message: "Invalid credentials" })  
+            return res.json({ success: false, message: "Invalid email or password" });
         }
 
-        const token = createToken(user._id);
-        res.json({ success: true, token })
-
+        // If you want to return a token, do it here
+         const token = createToken(user._id);
+        res.json({ success: true, message: "Login successful", token });
     } catch (error) {
-        console.log(error);
-        res.json({ success: false, message: "Error" })
+        console.log("Login error:", error);
+        res.json({ success: false, message: "Error" });
     }
+};
 
-}
 
 
 const createToken = (id) => {
@@ -35,40 +60,74 @@ const createToken = (id) => {
 }
 
 //register user
+// const registerUser = async (req, res) => {
+//     const { name, password, email } = req.body;        
+//     try {
+//         const exists = await userModel.findOne({ email });                 
+//         if (exists) {
+//             return res.json({ success: false, message: "User already exists" })       
+//         }
+//         if (!validator.isEmail(email)) {
+//             return res.json({ success: false, message: "Please enter valid email" });    
+//         }
+
+//         if (!/^\d+$/.test(email)) {
+//             return res.json({ success: false, message: "Email cannot be only numbers" });
+//         }
+
+//         const salt = await bcrypt.genSalt(10)
+//         const hashedPassword = await bcrypt.hash(password, salt);
+
+//         const newUser = new userModel({
+//             name: name,
+//             email: email,
+//             password: hashedPassword
+//         })
+
+//         const user = await newUser.save()    
+//         const token = createToken(user._id)
+//         res.json({ success: true, token });
+
+//     } catch (error) {
+//         console.log(error);
+//         res.json({ success: false, message: "Error" })
+//     }
+// }
+
+
+
 const registerUser = async (req, res) => {
-    const { name, password, email } = req.body;        
+    const { name, password, email } = req.body;
     try {
-        const exists = await userModel.findOne({ email });                 
+        if (!name) {
+            return res.json({ success: false, message: "Name is required" });
+        }
+        const exists = await userModel.findOne({ email });
         if (exists) {
-            return res.json({ success: false, message: "User already exists" })       
+            return res.json({ success: false, message: "User already exists" });
         }
         if (!validator.isEmail(email)) {
-            return res.json({ success: false, message: "Please enter valid email" });    
+            return res.json({ success: false, message: "Please enter valid email" });
         }
 
-        if (!/^\d+$/.test(email)) {
-            return res.json({ success: false, message: "Email cannot be only numbers" });
-        }
-
-        const salt = await bcrypt.genSalt(10)
+        const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const newUser = new userModel({
             name: name,
             email: email,
             password: hashedPassword
-        })
+        });
 
-        const user = await newUser.save()    
-        const token = createToken(user._id)
-        res.json({ success: true, token });
+        const user = await newUser.save();
+        const token = createToken(user._id);
+        res.json({ success: true, message: "Login successful", token });
 
     } catch (error) {
-        console.log(error);
-        res.json({ success: false, message: "Error" })
+        console.log("Registration error:", error); 
+        res.json({ success: false, message: error.message }); 
     }
 }
-
 
 
 export { loginUser, registerUser }

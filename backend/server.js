@@ -12,6 +12,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import orderRouter from "./routes/orderRoute.js";
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -52,6 +53,7 @@ app.use("/images", express.static('uploads'))
 app.use("/api/user", userRouter)
 app.use("/api/cart", cartRouter)
 app.use("/api/orders", orderRouter);
+
 
 
 // // 1. Connect to MongoDB
