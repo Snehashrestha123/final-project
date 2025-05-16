@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './placeorder.css';
 
 const Placeorder = () => {
-    const { cartItems, getTotalCartAmount, food_list } = useContext(Storecontext);
+    const { cartItems, getTotalCartAmount, food_list, user } = useContext(Storecontext);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -51,24 +51,46 @@ const Placeorder = () => {
             return;
         }
 
+        const orderPayload = {
+            items: orderItems,
+            totalAmount: getTotalCartAmount() + 2,
+            deliveryDetails: {
+                ...deliveryDetails,
+                email: user?.email || deliveryDetails.email,
+                name: user?.name || (deliveryDetails.firstName + " " + deliveryDetails.lastName)
+    
+            },
+            paymentMethod: 'COD'
+        };
+
+        // try {
+        //     const response = await fetch('http://localhost:4000/api/orders', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify({
+        //             items: orderItems,
+        //             totalAmount: getTotalCartAmount() + 2,
+        //             deliveryDetails,
+        //             paymentMethod: 'COD'
+        //         })
+        //     });
+
         try {
             const response = await fetch('http://localhost:4000/api/orders', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    items: orderItems,
-                    totalAmount: getTotalCartAmount() + 2,
-                    deliveryDetails,
-                    paymentMethod: 'COD'
-                })
+                body: JSON.stringify(orderPayload),
             });
-            console.log('Order response:', response);
+
+
+            // console.log('Order response:', response);
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
-                console.log('Order error data:', errorData);
                 setError(errorData.message || 'Failed to place order');
                 setLoading(false);
                 return;

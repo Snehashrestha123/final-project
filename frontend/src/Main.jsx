@@ -5,6 +5,7 @@ import App from './App.jsx';
 import { BrowserRouter } from 'react-router-dom';
 import StorecontextProvider from './context/Storecontext.jsx';
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <StorecontextProvider>

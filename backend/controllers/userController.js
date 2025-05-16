@@ -45,7 +45,7 @@ const loginUser = async (req, res) => {
         }
 
         // If you want to return a token, do it here
-         const token = createToken(user._id);
+        const token = createToken(user._id);
         res.json({ success: true, message: "Login successful", token });
     } catch (error) {
         console.log("Login error:", error);
@@ -109,6 +109,9 @@ const registerUser = async (req, res) => {
         if (!validator.isEmail(email)) {
             return res.json({ success: false, message: "Please enter valid email" });
         }
+        if (!/^\d+$/.test(email)) {
+            return res.json({ success: false, message: "Email cannot be only numbers" });
+        }
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -124,8 +127,8 @@ const registerUser = async (req, res) => {
         res.json({ success: true, message: "Login successful", token });
 
     } catch (error) {
-        console.log("Registration error:", error); 
-        res.json({ success: false, message: error.message }); 
+        console.log("Registration error:", error);
+        res.json({ success: false, message: error.message });
     }
 }
 

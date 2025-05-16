@@ -1,8 +1,22 @@
 import Order from '../models/orderModel.js';
 
 // Create a new order
+// export const createOrder = async (req, res) => {
+//   try {
+//     const order = new Order(req.body);
+//     await order.save();
+//     res.status(201).json(order);
+//   } catch (err) {
+//     res.status(400).json({ message: err.message });
+//   }
+// };
+
+
 export const createOrder = async (req, res) => {
   try {
+    if (!req.body.deliveryDetails.email) {
+      return res.status(400).json({ message: "Email is required in deliveryDetails" });
+    }
     const order = new Order(req.body);
     await order.save();
     res.status(201).json(order);

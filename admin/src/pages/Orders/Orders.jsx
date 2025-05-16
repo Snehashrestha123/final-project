@@ -69,7 +69,7 @@ const Orders = () => {
             </div>
             {/* Show user name and address */}
             <div className="order-user">
-              <strong>User Name:</strong> {order.user?.name || 'N/A'}
+               <strong>User Name:</strong> {order.deliveryDetails?.name || 'N/A'}
             </div>
             {/* <div className="order-user">
               <strong>Delivery Address:</strong> {order.user?.address || 'N/A'}
