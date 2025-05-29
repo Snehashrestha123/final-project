@@ -125,6 +125,24 @@
     color: tomato;
 }
 
+
+.review-btn {
+  background: transparent;
+  border: 1px solid tomato;
+  color: #49557e;
+  border-radius: 20px;
+  padding: 6px 18px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+.review-btn:hover {
+  background: #fff4f2;
+}
+
+
+
 @media (max-width:900px){ 
     .navbar .logo{
         width: 120px;

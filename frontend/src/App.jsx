@@ -8,6 +8,7 @@ import Home from './pages/home/Home';
 import Cart from './pages/cart/Cart';
 import Placeorder from './pages/placeorder/Placeorder';
 import Order from './pages/order/Order';
+import Review from './pages/review/Review';
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -42,6 +43,7 @@ const App = () => {
           } />
           <Route path='/order' element={<Placeorder />} />
           <Route path='/orders' element={<Order />} /> {/* Use /orders for order history */}
+          <Route path='/review' element={<Review />} />
         </Routes>
       </div>
       <Footer />

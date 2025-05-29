@@ -112,7 +112,7 @@ const registerUser = async (req, res) => {
         if (!/^\d+$/.test(email)) {
             return res.json({ success: false, message: "Email cannot be only numbers" });
         }
-
+     
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 

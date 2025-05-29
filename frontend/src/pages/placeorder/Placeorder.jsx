@@ -87,7 +87,7 @@ const Placeorder = () => {
             });
 
 
-            // console.log('Order response:', response);
+ 
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));

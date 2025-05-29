@@ -1,27 +1,30 @@
-import jwt from "jsonwebtoken"
+// middleware converts the token into the user id and using that user id we can add or remove data from the cart
+
+import jwt from 'jsonwebtoken';
+import userModel from '../models/userModel.js';
 
 const authMiddleware = async (req, res, next) => {
-    const { token } = req.headers;
-    if (!token) {
-        return res.json({ success: false, message: "Login again" })
+  const authHeader = req.headers.authorization;
+  if (!authHeader) return res.status(401).json({ message: 'No token provided' });
 
+  const token = authHeader.split(' ')[1];
+  try {
+    // Verify the token using your JWT secret
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); 
+    
+    const user = await userModel.findById(decoded.id);
+    
+    if (!user) {
+        return res.status(401).json({ message: 'User not found' });
     }
-    try {
-        //if we have the token, we will decode the token
-        const token_decode = jwt.verify(token, process.env.JWT_SECRET);
-        req.body.userId = token_decode.id;
-        next();   //call back function
-    } catch (error) {
-        console.log(error);
-        res.json({success:false,message:"Error"})
-    }
-}
+    
 
-
-
+    req.user = user;    
+    next();
+  } catch (err) {
+    
+    res.status(401).json({ message: 'Invalid token' });
+  }
+};
 
 export default authMiddleware;
-
-
-
-// middleware converts the token into the user id and using that user id we can add or remove data from the cart

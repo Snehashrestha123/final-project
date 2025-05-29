@@ -11,6 +11,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import orderRouter from "./routes/orderRoute.js";
+import reviewRouter from "./routes/reviewRoute.js";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -53,6 +54,7 @@ app.use("/images", express.static('uploads'))
 app.use("/api/user", userRouter)
 app.use("/api/cart", cartRouter)
 app.use("/api/orders", orderRouter);
+app.use("/api/reviews",reviewRouter);
 
 
 
