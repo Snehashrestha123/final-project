@@ -33,14 +33,15 @@
   color: #1976d2;
 }
 
+
 .order-status {
   color: #388e3c;
 }
 
-.order-user {
+/* .order-user {
   font-size: 1rem;
   margin-bottom: 6px;
-}
+} */
 
 .order-items ul {
   margin: 0;
@@ -52,3 +53,36 @@
   color: #888;
   margin-top: 8px;
 }
+
+
+
+
+.order-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.order-actions button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+    transition: opacity 0.2s ease;
+}
+
+.order-actions button:hover {
+    opacity: 0.9;
+}
+
+.btn-accept {
+    background-color: #4CAF50; /* Green */
+}
+
+.btn-reject {
+    background-color: #f44336; /* Red */
+}
+

@@ -1,16 +1,5 @@
 import Order from '../models/orderModel.js';
 
-// Create a new order
-// export const createOrder = async (req, res) => {
-//   try {
-//     const order = new Order(req.body);
-//     await order.save();
-//     res.status(201).json(order);
-//   } catch (err) {
-//     res.status(400).json({ message: err.message });
-//   }
-// };
-
 
 export const createOrder = async (req, res) => {
   try {
@@ -25,7 +14,7 @@ export const createOrder = async (req, res) => {
   }
 };
 
-// Get all orders
+
 export const getOrders = async (req, res) => {
   console.log("getOrders (backend) – query:", req.query);
   let filter = {};
@@ -43,7 +32,7 @@ export const getOrders = async (req, res) => {
 };
 
 
-// Get a single order by ID
+
 export const getOrderById = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
@@ -54,7 +43,7 @@ export const getOrderById = async (req, res) => {
   }
 };
 
-// Update order status (optional, for admin)
+
 export const updateOrderStatus = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
@@ -67,3 +56,13 @@ export const updateOrderStatus = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
+
+
+
+
+
+
+
+
+
