@@ -4,7 +4,7 @@ import { assets } from '../../assets/assets'
 import { useState } from 'react'
 import axios from "axios"
 import { toast } from 'react-toastify'
-//import { useEffect } from 'react'
+
 
 const Add = ({url}) => {
     
@@ -14,26 +14,24 @@ const Add = ({url}) => {
         description: "",
         price: "",
         category: "Salad"
-        // whenever we reload the page the defalut category will be salad as it is diplay 1st in the explore menu section
-
     })
 
-    //  if only one value changed, it will help user update the changed value only.
+
     const onChangeHandler = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        setData(data => ({ ...data, [name]: value }))   //you have taken old data and then set to new data that we get from event
+        setData(data => ({ ...data, [name]: value }))   
     }
 
     const onSubmitHandler = async (event) => {
-        event.preventDefault();   //to avoid reload of the page
+        event.preventDefault();  
         const formData = new FormData();
         formData.append("name", data.name)
         formData.append("description", data.description)
-        formData.append("price", Number(data.price))    //string will be converted into number as in the above data set we have passed price as a string
+        formData.append("price", Number(data.price))    
         formData.append("category", data.category)
         formData.append("image", image)
-        const response = await axios.post(`${url}/api/food/add`, formData);  //we have created add api using post so we use post
+        const response = await axios.post(`${url}/api/food/add`, formData);
         if (response.data.success) {
             setData({
                 name: "",
@@ -41,16 +39,14 @@ const Add = ({url}) => {
                 price: "",
                 category: "Salad"
             })
-            setImage(false)  //image will be reset
-            toast.success(response.data.message)    //gives pop up after food has been added
+            setImage(false)  
+            toast.success(response.data.message)    
 
         } else {
             toast.error(response.data.message)
         }
     }
-    //  useEffect(()=>{
-    //     console.log(data);
-    //  },[data])    //when dat awill be updated this function will be executed
+    
 
 
     return (
@@ -59,15 +55,12 @@ const Add = ({url}) => {
                 <div className="add-img-upload flex-col" >
                     <p>Upload Image</p>
                     <label htmlFor="image">
-                        {/* To help admin disply the picture */}
                         <img src={image ? URL.createObjectURL(image) : assets.upload_area} alt="" />
                     </label>
-                    {/* To allow admin choose image */}
                     <input onChange={(e) => setImage(e.target.files[0])} type="file" id="image" hidden required />
                 </div>
                 <div className="add-product-name flex-col">
                     <p>Product name</p>
-                    {/* to make controlled input field which means any changes made here will change the const value in the above section */}
                     <input onChange={onChangeHandler} value={data.name} type="text" name='name' placeholder='Type here' />
 
                 </div>
@@ -92,7 +85,7 @@ const Add = ({url}) => {
                     </div>
                     <div className="add-price flex-col">
                         <p>Product price</p>
-                        <input onChange={onChangeHandler} value={data.price} type="number" name="price" placeholder='' $20 />
+                        <input onChange={onChangeHandler} value={data.price} type="number" name="price" placeholder=''  />
                     </div>
                 </div>
                 <button type='submit' className='add-btn'>ADD</button>

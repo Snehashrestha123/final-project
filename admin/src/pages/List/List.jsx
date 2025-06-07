@@ -6,12 +6,12 @@ import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 
 const List = ({url}) => {
-    const [list, setList] = useState([]);    //state variable
+    const [list, setList] = useState([]);   
     
     const fetchList = async () => {
         try {
             const response = await axios.get(`${url}/api/food/list`);
-            console.log("API Response:", response.data); // Debug log
+            console.log("API Response:", response.data);
             if(response.data.success){
                 setList(response.data.data);
             }

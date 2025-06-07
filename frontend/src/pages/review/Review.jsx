@@ -11,7 +11,6 @@ const Review = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Fetch reviews on mount
   useEffect(() => {
     fetch('http://localhost:4000/api/reviews')
       .then(res => res.json())
@@ -19,7 +18,7 @@ const Review = () => {
       .catch(() => setReviews([]));
   }, []);
 
-  // Handle review submission
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');

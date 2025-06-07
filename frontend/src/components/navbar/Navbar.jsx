@@ -11,8 +11,8 @@ const Navbar = ({ setShowLogin }) => {
 
   const handleCartClick = (e) => {
     if (!token) {
-      e.preventDefault(); // Prevent navigation
-      setShowLogin(true); // Show login popup
+      e.preventDefault(); 
+      setShowLogin(true); 
     }
   };
 

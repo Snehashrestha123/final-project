@@ -40,11 +40,6 @@ const Navbar = ({ onLogout }) => {
           </button>
         )}
        <img className='profile' src={assets.profile_image} alt="" />
-        {/* <img
-          src="https://randomuser.me/api/portraits/men/1.jpg"
-          alt="Admin"
-          className="navbar-avatar"
-        /> */}
       </div>
     </nav>
   );

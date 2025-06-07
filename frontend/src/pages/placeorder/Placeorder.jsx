@@ -63,20 +63,6 @@ const Placeorder = () => {
             paymentMethod: 'COD'
         };
 
-        // try {
-        //     const response = await fetch('http://localhost:4000/api/orders', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify({
-        //             items: orderItems,
-        //             totalAmount: getTotalCartAmount() + 2,
-        //             deliveryDetails,
-        //             paymentMethod: 'COD'
-        //         })
-        //     });
-
         try {
             const response = await fetch('http://localhost:4000/api/orders', {
                 method: 'POST',
@@ -85,9 +71,6 @@ const Placeorder = () => {
                 },
                 body: JSON.stringify(orderPayload),
             });
-
-
- 
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));

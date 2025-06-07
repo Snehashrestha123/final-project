@@ -8,48 +8,19 @@ const LoginPopup = ({ setShowLogin }) => {
 
   const { url, setToken } = useContext(Storecontext)
   const [currState, setCurrState] = useState("Login")
-
-  //creating the state variable where the user's name,email and password will be stored
   const [data, setData] = useState({
     name: "",
     email: "",
     password: ""
   })
 
-
-  // creating on change handler which will take the data from the user and store it in the state variable
   const onChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setData(data => ({ ...data, [name]: value }))
   }
 
-  // const onLogin = async (event) => {
-  //   event.preventDefault()    //to prevent the page from reloading
-
-  //   let newUrl = url;
-  //   if (currState == "Login") {
-  //     newUrl += "/api/user/login"      //checks whether the current state is login or not
-  //   }
-  //   else {
-  //     newUrl += "/api/user/register"
-  //   }
-
-  //   //call api
-  //   const response = await axios.post(newUrl, data);
-  //   if (response.data.success) {   //if this is true that means the user is logged in
-  //     setToken(response.data.token);
-  //     localStorage.setItem("token", response.data.token);
-  //     setShowLogin(false)
-
-  //   }
-  //   else {
-  //     alert(response.data.message)
-  //   }
-  // };
-
-
-
+ 
   const onLogin = async (event) => {
   event.preventDefault();
 
